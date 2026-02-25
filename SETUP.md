@@ -29,6 +29,23 @@ Examples:
 
 See `docs/06-setup-options.md` for full trade-offs and rollout guidance.
 
+## Enterprise Mirror Check (Do this before installs)
+
+If your organization requires internal mirrors/proxies, Copilot should check and configure them first.
+
+Copilot runbook:
+
+1. Check existing environment variables: `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`, `NPM_CONFIG_REGISTRY`
+2. Confirm approved internal endpoints with your team/platform docs
+3. Configure package sources before installing tools:
+	- apt mirror (Linux/devcontainer image build)
+	- npm registry mirror (Node packages)
+	- Go module proxy (if Go tools are installed)
+4. Verify mirror reachability with a dry-run install or metadata query
+5. Only then run normal setup commands from this guide
+
+Reference: `docs/07-enterprise-mirrors.md`
+
 ## 0) Prerequisites Check
 
 Run:

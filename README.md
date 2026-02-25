@@ -24,13 +24,15 @@ This package provides everything your Copilots need to implement a scalable, mul
 
 2. **Follow SETUP.md** — Your Copilot will walk through initialization
 
-3. **For a brand-new project repo** — run the fast bootstrap in [docs/05-new-repo-bootstrap.md](./docs/05-new-repo-bootstrap.md)
+3. **Enterprise networks** — run mirror checks in [docs/07-enterprise-mirrors.md](./docs/07-enterprise-mirrors.md) before installs
 
-4. **(Optional) Enable the Beads UI** — install Node/npm and run `make beads-ui`
+4. **For a brand-new project repo** — run the fast bootstrap in [docs/05-new-repo-bootstrap.md](./docs/05-new-repo-bootstrap.md)
 
-5. **Test with a pilot epic** — Create a small 2-3 task epic to validate the workflow
+5. **(Optional) Enable the Beads UI** — install Node/npm and run `make beads-ui`
 
-6. **Dispatch to team** — Share the repo link; each team member clones and follows SETUP.md
+6. **Test with a pilot epic** — Create a small 2-3 task epic to validate the workflow
+
+7. **Dispatch to team** — Share the repo link; each team member clones and follows SETUP.md
 
 ## Integration Modes
 
@@ -83,6 +85,7 @@ For full setup instructions, see [SETUP.md](./SETUP.md).
 - [**docs/04-troubleshooting.md**](./docs/04-troubleshooting.md) — Common issues and resolution steps
 - [**docs/05-new-repo-bootstrap.md**](./docs/05-new-repo-bootstrap.md) — Fast start for a new project in a separate repo
 - [**docs/06-setup-options.md**](./docs/06-setup-options.md) — Devcontainer-first vs local-native rollout guidance
+- [**docs/07-enterprise-mirrors.md**](./docs/07-enterprise-mirrors.md) — Internal mirrors/proxy checks for Copilot setup runs
 - [**templates/**](./templates/) — Configuration file templates for .beads/config.yaml, Makefile, agent personas, etc.
 
 ## How It Works
