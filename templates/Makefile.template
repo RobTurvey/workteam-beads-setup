@@ -1,0 +1,58 @@
+SHELL := /bin/bash
+
+PREFIX ?= td
+
+.PHONY: project-bootstrap mem-ready mem-show mem-claim mem-close mem-handoff mem-next mem-active mem-ops beads-ui beads-ui-stop
+
+project-bootstrap:
+	@echo "Bootstrapping Beads in current repo with prefix $(PREFIX)..."
+	@mkdir -p .beads .agent docs
+	@if [ ! -f .beads/config.yaml ] && [ -f templates/beads-config.yaml.template ]; then cp templates/beads-config.yaml.template .beads/config.yaml; fi
+	@if [ ! -f .agent/copilot.md ] && [ -f templates/agent-copilot.md.template ]; then cp templates/agent-copilot.md.template .agent/copilot.md; fi
+	@if [ ! -f .agent/agent-x.md ] && [ -f templates/agent-x.md.template ]; then cp templates/agent-x.md.template .agent/agent-x.md; fi
+	@if [ ! -f .gitignore ] && [ -f templates/gitignore.template ]; then cp templates/gitignore.template .gitignore; fi
+	@if bd info >/dev/null 2>&1; then \
+		echo "Beads already initialized in this repo."; \
+	else \
+		bd init --prefix $(PREFIX); \
+	fi
+	@echo "Bootstrap complete. Next: make mem-ready"
+
+mem-ready:
+	bd ready
+
+mem-show:
+	@if [ -z "$(ISSUE)" ]; then echo "Usage: make mem-show ISSUE=<id>"; exit 1; fi
+	bd show $(ISSUE)
+
+mem-claim:
+	@if [ -z "$(ISSUE)" ]; then echo "Usage: make mem-claim ISSUE=<id>"; exit 1; fi
+	bd update $(ISSUE) --claim
+
+mem-close:
+	@if [ -z "$(ISSUE)" ]; then echo "Usage: make mem-close ISSUE=<id>"; exit 1; fi
+	bd close $(ISSUE)
+
+mem-handoff:
+	bd sync
+	@echo "Session handoff complete."
+
+mem-next:
+	@echo "Strict delivery pickup queue (open, non-epic, non-ops):"
+	bd list --json | jq -r '.[] | select(.status=="open") | select((.issue_type // .type // "") != "epic") | select(((.labels // []) | join(",") | ascii_downcase | test("ops|patrol|molecule|agent") | not)) | "\(.id)\tP\(.priority // 2)\t\(.status)\t\(.issue_type // .type // "task")\t\(.title)"'
+
+mem-active:
+	@echo "Active delivery view (in-progress and epics, non-ops):"
+	bd list --json | jq -r '.[] | select(.status=="in_progress" or (.issue_type // .type // "")=="epic") | select(((.labels // []) | join(",") | ascii_downcase | test("ops|patrol|molecule|agent") | not)) | "\(.id)\tP\(.priority // 2)\t\(.status)\t\(.issue_type // .type // "task")\t\(.title)"'
+
+mem-ops:
+	@echo "Operational triage view (active ops/patrol/molecule issues):"
+	bd list --json | jq -r '.[] | select(.status=="open" or .status=="in_progress") | select(((.labels // []) | join(",") | ascii_downcase | test("ops|patrol|molecule|agent")) or ((.issue_type // .type // "") | test("agent|ops|molecule|patrol")) or ((.id // "") | startswith("td-mol-")) or ((.title // "") | ascii_downcase | test("patrol|witness|refinery|wisp|inbox"))) | "\(.id)\tP\(.priority // 2)\t\(.status)\t\(.issue_type // .type // "task")\t\(.title)"'
+
+beads-ui:
+	@if ! command -v npx >/dev/null 2>&1; then echo "Missing: npx (install Node.js + npm)"; exit 1; fi
+	@npx beads-ui@latest --port 3002
+
+beads-ui-stop:
+	@pkill -f "beads-ui" >/dev/null 2>&1 || true
+	@echo "Stopped beads-ui (if running)."

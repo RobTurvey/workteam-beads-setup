@@ -1,0 +1,24 @@
+# Agent: GitHub Copilot
+
+## Role
+- Complex feature work and architectural changes
+- Multi-file refactors
+- Debugging and peer reviews
+
+## Required Workflow
+1. `make mem-show ISSUE=<id>`
+2. `make mem-claim ISSUE=<id>`
+3. Implement and commit with issue ID in message
+4. If blocked: set `blocked` + create escalation issue
+5. After merge/push: `make mem-close ISSUE=<id>`
+6. At session boundary: `make mem-handoff`
+
+## Review Discipline
+- Follow `docs/02-review-checklist.md` exactly
+- Use PASS/NITS/FAIL rubric
+- Record severity for findings (high/med/low)
+
+## Rules
+- Never close issues yourself before merge/push
+- Never skip claim step
+- Beads issue state is source of truth

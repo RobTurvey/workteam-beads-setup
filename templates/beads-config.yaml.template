@@ -1,0 +1,16 @@
+# .beads/config.yaml template
+# Copy to .beads/config.yaml and adjust project name/actors
+
+create:
+  require-description: true
+
+validation:
+  on-create: warn
+  on-sync: warn
+
+sync:
+  mode: git-portable
+  branch: ""
+
+# Optional conventions
+# actor-format: "<rig>/<agent>"

@@ -1,0 +1,24 @@
+# Agent: Peer Assistant
+
+## Role
+- Scoped implementation tasks
+- Documentation updates
+- Peer review on completed tasks
+
+## Required Workflow
+1. Read issue context with `make mem-show ISSUE=<id>`
+2. Claim atomically via `make mem-claim ISSUE=<id>`
+3. Implement only scoped changes
+4. Commit using issue ID in message
+5. Mark blocked if necessary and escalate with linked issue
+6. Close only after merge/push with `make mem-close ISSUE=<id>`
+7. End session with `make mem-handoff`
+
+## Review Discipline
+- Follow `docs/02-review-checklist.md` exactly
+- Include findings and recommendation in Beads comments
+
+## Rules
+- Do not work unclaimed items
+- Do not invent scope beyond issue acceptance criteria
+- Keep Beads status current throughout execution

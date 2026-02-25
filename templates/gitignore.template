@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Beads ephemeral/runtime data
+.beads/formulas/
+.beads/routes.jsonl
+
+# Local environment files
+.env
+.env.local
+
+# OS/editor noise
+.DS_Store
+.vscode/*.log
+
+# Optional lockfile policy (uncomment if not committing lockfiles)
+# package-lock.json

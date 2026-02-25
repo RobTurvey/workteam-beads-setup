@@ -1,0 +1,13 @@
+{
+  "name": "workteam-beads-setup",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Team multi-agent Beads workflow setup package",
+  "scripts": {
+    "postinstall": "echo 'Install complete'",
+    "beads-ui": "beads-ui --port 3002"
+  },
+  "devDependencies": {
+    "beads-ui": "^0.9.3"
+  }
+}
