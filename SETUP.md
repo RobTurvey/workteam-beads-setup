@@ -29,6 +29,8 @@ Examples:
 
 See `docs/06-setup-options.md` for full trade-offs and rollout guidance.
 
+For a full phased adoption plan with rollback points, read `docs/08-ultimate-setup-blueprint.md` before implementation.
+
 ## Enterprise Mirror Check (Do this before installs)
 
 If your organization requires internal mirrors/proxies, Copilot should check and configure them first.
