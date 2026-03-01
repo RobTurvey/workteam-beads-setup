@@ -12,6 +12,7 @@ This handoff captures what actually worked (and what failed) during AGRc Beads m
 
 - Beads migration worked best as a **process-only overlay first**.
 - **Devcontainer-first** execution prevented host-toolchain drift.
+- Prerequisites must be installed at **devcontainer image build time** (Dockerfile), not deferred to manual/host setup.
 - Operational reliability improved after adding:
   - Dolt runtime checks
   - snapshot-first recovery workflow
@@ -27,6 +28,17 @@ This handoff captures what actually worked (and what failed) during AGRc Beads m
 5. No broad `git stash -u` over Beads runtime state.
 
 ## What Broke in AGRc (and Required Fixes)
+
+### 0) Prerequisites not guaranteed at image build time
+- Problem: if core tools are only installed manually/post-create, startup became inconsistent across sessions.
+- Rule:
+  - Install critical tools in `.devcontainer/Dockerfile` build layer.
+  - Use `postCreate` for verification/fallback only.
+- Required build-time tools:
+  - `node`, `npm`
+  - `make`, `jq`, `go`, `curl`
+  - `dolt`
+  - `bd`
 
 ### 1) Upstream install URL mismatch
 - Problem: setup references pointed to unavailable `withbeads/beads`.
@@ -126,6 +138,7 @@ git commit -m "beads: snapshot issue state"
 
 ## Definition of Done for mysasmigrationtopython Migration
 
+- Devcontainer image build installs required prerequisites (including `dolt` and `bd`) without manual host steps.
 - Devcontainer runs Beads commands reproducibly.
 - Governance controls are active and auditable.
 - Pilot tasks complete with PASS/NITS/FAIL evidence.
