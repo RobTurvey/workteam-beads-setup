@@ -20,6 +20,24 @@ Ensure the devcontainer build installs:
 
 Use post-create scripts for verification and fallback only.
 
+## Offline `bd` Binary Option (When Network Install Is Blocked)
+
+If your environment blocks install scripts/npm for `bd`, use the prepackaged binary:
+- Binary path: `binaries/linux-arm64/bd`
+- Checksum file: `binaries/linux-arm64/bd.sha256`
+
+Install steps:
+
+```bash
+sha256sum -c binaries/linux-arm64/bd.sha256
+install -m 0755 binaries/linux-arm64/bd /usr/local/bin/bd
+bd version
+```
+
+Notes:
+- This bundle is architecture-specific (`linux-arm64`).
+- Keep `dolt` installed via normal package/build process; this offline bundle is only for `bd`.
+
 ## Setup Corrections That Reduced Failure Rate
 
 1. Prefer reachable install source for bd:
